@@ -1,4 +1,5 @@
 import unittest
+from src.db_connection.connector import DBConnector
 
 import src.utils.file as file_utils
 from src.db_connection.sqlite_connector import SqliteConnector
@@ -13,12 +14,12 @@ class Test_sqlite_connector(unittest.TestCase):
         for db_dir_path in db_dir_paths:
             db_file_paths.extend(file_utils.get_files_in_all_sub_directories(db_dir_path, lambda f: f.endswith('.sqlite')))
         return db_file_paths
-   
+    
     def test_connection(self):
         self.assertGreaterEqual(len(self.db_file_paths), 1)
         for db_file_path in self.db_file_paths:
             db_connector = SqliteConnector(db_file_path)
-            self.assertIsNotNone(db_connector.con)
+            self.assertIsNotNone(db_connector.conn)
         print(f"Test passed with {len(self.db_file_paths)} databases")
     
     def test_fetching_tables(self):
